@@ -1,4 +1,4 @@
-# Cacusality
+# Gradient Projection for Sparse Reconstruction (Python Implementation)
 
 ## Overview
 
