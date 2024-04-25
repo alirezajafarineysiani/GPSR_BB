@@ -1,12 +1,15 @@
-def GPSR_BB(y, A, tau):
-    # test for the number of required parameters
+def GPSR_BB(y, A, tau, **kwargs):
+    # Function body remains the same as in MATLAB
 
-    # flag for initial x (can take any values except 0, 1, 2)
+    # Test for the number of required parameters
+
+
+    # Flag for initial x
     Initial_X_supplied = 3333
 
-    # Set the defaults for the optional parameters
+    # Set defaults for optional parameters
     stopCriterion       = 3
-    tolA                = 1e-6
+    tolA                = 0.01
     tolD                = 0.0001
     debias              = 0
     maxiter             = 10000
@@ -18,66 +21,63 @@ def GPSR_BB(y, A, tau):
     alphamin            = 1e-30
     alphamax            = 1e30
     compute_mse         = 0
-    AT                  = 0
+    AT                  = np.transpose(A)
     verbose             = 0
     continuation        = 0
     cont_steps          = -1
     firstTauFactorGiven = 0
-    x                   = np.mat(np.zeros((1000, 1)))
+    n_local , m_local   = A.shape
+    x                   = np.mat(np.zeros((m_local, 1)))
 
-
-    # Set the defaults for outputs that may not be computed
+    # Set defaults for outputs
     debias_start = 0
-    x_debias     = None
-    mses         = None
+    x_debias = []
+    mses = []
 
-    # # Read the optional parameters
-    # for key, value in kwargs.items():
-    #     key_upper = key.upper()
-    #     if key_upper == 'STOPCRITERION':
-    #         stopCriterion = value
-    #     elif key_upper == 'TOLERANCEA':
-    #         tolA = value
-    #     elif key_upper == 'TOLERANCED':
-    #         tolD = value
-    #     elif key_upper == 'DEBIAS':
-    #         debias = value
-    #     elif key_upper == 'MAXITERA':
-    #         maxiter = value
-    #     elif key_upper == 'MAXITERD':
-    #         maxiter_debias = value
-    #     elif key_upper == 'MINITERA':
-    #         miniter = value
-    #     elif key_upper == 'MINITERD':
-    #         miniter_debias = value
-    #     elif key_upper == 'INITIALIZATION':
-    #         if np.prod(np.array(value).shape) > 1:
-    #             # initial x supplied as an array
-    #             init = Initial_X_supplied
-    #             x = np.array(value)
-    #         else:
-    #             init = value
-    #     elif key_upper == 'MONOTONE':
-    #         enforceMonotone = value
-    #     elif key_upper == 'CONTINUATION':
-    #         continuation = value
-    #     elif key_upper == 'CONTINUATIONSTEPS':
-    #         cont_steps = value
-    #     elif key_upper == 'FIRSTTAUFACTOR':
-    #         firstTauFactor = value
-    #         firstTauFactorGiven = 1
-    #     elif key_upper == 'TRUE_X':
-    #         compute_mse = 1
-    #         true = np.array(value)
-    #     elif key_upper == 'ALPHAMIN':
-    #         alphamin = value
-    #     elif key_upper == 'ALPHAMAX':
-    #         alphamax = value
-    #     elif key_upper == 'VERBOSE':
-    #         verbose = value
-    #     else:
-    #         # Hmmm, something wrong with the parameter string
-    #         raise ValueError(f'Unrecognized option: {key}')
+    # Read optional parameters
+    for key, value in kwargs.items():
+        if key.upper() == 'STOPCRITERION':
+            stopCriterion = value
+        elif key.upper() == 'TOLERANCEA':
+            tolA = value
+        elif key.upper() == 'TOLERANCED':
+            tolD = value
+        elif key.upper() == 'DEBIAS':
+            debias = value
+        elif key.upper() == 'MAXITERA':
+            maxiter = value
+        elif key.upper() == 'MAXITERD':
+            maxiter_debias = value
+        elif key.upper() == 'MINITERA':
+            miniter = value
+        elif key.upper() == 'MINITERD':
+            miniter_debias = value
+        elif key.upper() == 'INITIALIZATION':
+            if np.prod(np.array(value).shape) > 1:
+                init = Initial_X_supplied
+                x = value
+            else:
+                init = value
+        elif key.upper() == 'MONOTONE':
+            enforceMonotone = value
+        elif key.upper() == 'CONTINUATION':
+            continuation = value
+        elif key.upper() == 'CONTINUATIONSTEPS':
+            cont_steps = value
+        elif key.upper() == 'FIRSTTAUFACTOR':
+            firstTauFactor = value
+            firstTauFactorGiven = 1
+        elif key.upper() == 'TRUE_X':
+            compute_mse = 1
+            true = value
+        elif key.upper() == 'ALPHAMIN':
+            alphamin = value
+        elif key.upper() == 'ALPHAMAX':
+            alphamax = value
+        elif key.upper() == 'AT':
+            AT = value
+        elif key.upper() == 'VERBOSE':
+            verbose = value
         
     # Check stopping criterion
     if np.sum(np.isin(stopCriterion, [0, 1, 2, 3, 4, 5])) == 0:
@@ -87,13 +87,23 @@ def GPSR_BB(y, A, tau):
 
 
     # Precompute A'*y
+    Aty = np.matmul(AT,y)
     
 
 
     # Initialization
     if init == 0:
-        x = np.matmul(np.transpose(A),np.zeros_like(y))
-        # x = np.mat(np.concatenate([np.transpose(A), np.zeros_like(y).reshape(-1, 1)], axis=1))
+        x = np.matmul(AT,np.zeros_like(y))
+        # x = np.mat(np.concatenate([AT, np.zeros_like(y).reshape(-1, 1)], axis=1))
+    elif init == 1:
+        x = np.random.randn(*AT(np.zeros_like(y)).shape)
+    elif init == 2:
+        x = Aty
+    elif init == Initial_X_supplied:
+        # Check size of initial x
+        pass
+    else:
+        raise ValueError('Unknown ''Initialization'' option')
 
     
     # Check if tau is an array
@@ -109,14 +119,13 @@ def GPSR_BB(y, A, tau):
 
     # Check the value of tau for scalar tau
     if np.prod(np.array(tau).shape) == 1:
-        aux = np.matmul(np.transpose(A),y)
+        aux = np.matmul(AT,y)
         max_tau = np.max(np.abs(aux))
         if tau >= max_tau:
             x = np.zeros_like(aux)
             if debias:
                 x_debias = x
-            objective[0] = 0.5 * np.vdot(y,y)
-            times[0] = 0
+            
             # if compute_mse:
             #     mses[0] = np.sum(true.ravel() ** 2)
             # return x, x_debias, objective, times, debias_start, mses, taus
@@ -132,7 +141,6 @@ def GPSR_BB(y, A, tau):
 
     
     # Start the clock
-    t0 = time.time()
 
     # Store given tau for continuation procedure
     final_tau = tau
@@ -170,7 +178,7 @@ def GPSR_BB(y, A, tau):
         resid = y - np.matmul(A,x)
 
         if cont_steps == -1:
-            gradq = np.matmul(np.transpose(A),resid)
+            gradq = np.matmul(AT,resid)
             tau = max(final_tau, 0.2 * np.max(np.abs(gradq)))
             if tau == final_tau:
                 stopCriterion = final_stopCriterion
@@ -198,14 +206,10 @@ def GPSR_BB(y, A, tau):
         # initial value of the objective function
         if cont_loop == 1:
             alpha = 1.0
-            f = 0.5 * np.vdot(resid, resid) + np.sum(tau * u) + np.sum(tau * v)
-
-            objective = f
+         
             if compute_mse:
                 tempp = x - true
                 mses = np.vdot(tempp,tempp)
-            if verbose:
-                print(f'Initial obj={f}, alpha={alpha}, nonzeros={num_nz_x}')
 
         # Compute the initial gradient and the useful
         # quantity resid_base
@@ -213,15 +217,13 @@ def GPSR_BB(y, A, tau):
 
         # control variable for the outer loop and iteration counter
         keep_going = 1
-
-        if verbose:
-            print(f'\nInitial obj={f}, nonzeros={num_nz_x}')
+        
 
         while keep_going:
             # compute gradient
-            temp = np.matmul(np.transpose(A),resid_base)
+            temp = np.matmul(AT,resid_base)
 
-            term  =  temp - np.matmul(np.transpose(A),y)
+            term  =  temp - np.matmul(AT,y)
             gradu =  term + tau
             gradv = -term + tau
 
@@ -259,13 +261,11 @@ def GPSR_BB(y, A, tau):
             # calculate nonzero pattern and number of nonzeros (do this *always*)
             nz_x_prev = np.copy(nz_x)
             # nz_x = (x != 0.0)
-            nz_x     =  ~np.isin(x,0.0)
-            num_nz_x = np.sum(nz_x)
+            # nz_x     =  np.isin(x,0.0,invert=True)
+            # num_nz_x = np.sum(nz_x)
 
             # update residual and function
             resid = y - resid_base - lambda_val * auv
-            prev_f = f
-            f = 0.5 * np.vdot(resid, resid) + np.sum(tau * u) + np.sum(tau * v)
 
 
             # compute new alpha
@@ -284,8 +284,7 @@ def GPSR_BB(y, A, tau):
 
             # update iteration counts, store results, and times
             iter += 1
-            objective= f
-            t2 = time.time() - t0
+           
 
             if compute_mse:
                 err = true - x
@@ -319,8 +318,13 @@ def GPSR_BB(y, A, tau):
             elif stopCriterion == 3:
                 # compute the "LCP" stopping criterion
                 w = np.concatenate([np.minimum(gradu, old_u), np.minimum(gradv, old_v)])
-                criterionLCP = np.linalg.norm(w, np.inf)
-                criterionLCP = criterionLCP / max([1.0e-6, np.linalg.norm(old_u, np.inf), np.linalg.norm(old_v, np.inf)])
+                criterionLCP = np.max(w)
+                a11 = 1.0e-6
+                a22 = np.max(old_u)
+                a33 = np.max(old_v)
+                den = np.max([a11,a22, a33])
+                
+                criterionLCP = criterionLCP / den
                 keep_going = criterionLCP > tolA
                 if verbose:
                     print(f'LCP = {criterionLCP} (target = {tolA})')
@@ -386,7 +390,7 @@ def GPSR_BB(y, A, tau):
             resid = resid - y
             resid_prev = np.finfo(float).eps * np.ones(resid.shape)
 
-            rvec = np.matmul(np.transpose(A),resid)
+            rvec = np.matmul(AT,resid)
             rvec = np.matmul(rvec,zeroind)
             rTr_cg = np.vdot(rvec, rvec)
 
@@ -397,7 +401,7 @@ def GPSR_BB(y, A, tau):
             # main loop
             while cont_debias_cg:
                 RWpvec = np.matmul(A,pvec)
-                Apvec = np.matmul(np.transpose(A),RWpvec)
+                Apvec = np.matmul(AT,RWpvec)
                 Apvec = np.matmul(Apvec,zeroind)
 
                 alpha_cg = rTr_cg / (np.vdot(pvec, Apvec))
@@ -413,9 +417,7 @@ def GPSR_BB(y, A, tau):
 
                 iter += 1
 
-                objective.append(0.5 * np.vdot(resid, resid) +
-                                 np.sum(np.matmul(tau,np.abs(x_debias.ravel()))))
-                times.append(time.time() - t0)
+                
 
                 if compute_mse:
                     err = true - x_debias
