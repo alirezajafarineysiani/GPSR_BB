@@ -65,8 +65,9 @@ To build and run the C implementation, you will need the OpenBLAS library versio
 ### Building the C Implementation
 
 To build the C implementation (example assuming gcc and OpenBLAS installed):
-
+```bash
 gcc main.c -lopenblas -L/opt/OpenBLAS/lib -I/opt/OpenBLAS/include -o main
+```
 
 ### Running the Executable
 
