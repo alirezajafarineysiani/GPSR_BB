@@ -28,7 +28,7 @@ To build and run the C implementation, you need the OpenBLAS library. Here's how
    
 
 2. **Extract the Archive:**
-   '''bash
+    \`\`\`bash
    tar -xzvf OpenBLAS-0.3.27.tar.gz
    cd OpenBLAS-0.3.27
    \`\`\`
