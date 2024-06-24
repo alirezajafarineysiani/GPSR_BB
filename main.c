@@ -10,7 +10,6 @@
 #include <string.h>
 #include <time.h>
 #include <cblas.h>
-#include <pthread.h>
 #include <openblas_config.h>
 #include <immintrin.h>
 #include <float.h>
