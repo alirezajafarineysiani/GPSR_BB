@@ -66,10 +66,8 @@ To build and run the C implementation, you will need the OpenBLAS library versio
 
 To build the C implementation (example assuming gcc and OpenBLAS installed):
 ```bash
-gcc main.c -lopenblas -L/opt/OpenBLAS/lib -I/opt/OpenBLAS/include -o gpsr_bb
+gcc main.c -lopenblas -L/opt/OpenBLAS/lib -I/opt/OpenBLAS/include 
 ```
-
-Replace \`/opt/OpenBLAS/lib\` and \`/opt/OpenBLAS/include\` with the actual paths where OpenBLAS is installed.
 
 ### Using the Python Implementation
 
