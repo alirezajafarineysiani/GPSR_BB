@@ -25,7 +25,7 @@ To use these implementations, follow the steps below:
 
 #### OpenBLAS Library (for C Implementation)
 
-To build and run the C implementation, you need the OpenBLAS library. Here's how you can install it:
+To build and run the C implementation, you will need the OpenBLAS library version 0.3.27. Here are the steps to install it:
 
 1. **Download OpenBLAS:**
    ```bash
