@@ -15,7 +15,8 @@ $$
 $$
 
 **The Cauchy-Schwarz Inequality**
-$$\left( \sum_{k=1}^n a_k b_k \right)^2 \leq \left( \sum_{k=1}^n a_k^2 \right) \left( \sum_{k=1}^n b_k^2 \right)$$
+$$\left( \underset{x}{\text{minimize}} \|x\|_0 \\
+\text{subject to} \quad Ax = b \right)$$
 
 ## Getting Started
 
