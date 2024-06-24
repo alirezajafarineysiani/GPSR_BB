@@ -23,12 +23,12 @@ To use these implementations, follow the steps below:
 To build and run the C implementation, you need the OpenBLAS library. Here's how you can install it:
 
 1. **Download OpenBLAS:**
-   \`\`\`
+   '''bash
    wget https://github.com/OpenMathLib/OpenBLAS/releases/download/v0.3.27/OpenBLAS-0.3.27.tar.gz
-   \`\`\`
+   
 
 2. **Extract the Archive:**
-   \`\`\`
+   '''bash
    tar -xzvf OpenBLAS-0.3.27.tar.gz
    cd OpenBLAS-0.3.27
    \`\`\`
