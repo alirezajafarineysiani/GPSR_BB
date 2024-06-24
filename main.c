@@ -1,9 +1,3 @@
-// gcc main.c -O3 -mavx -lopenblas -L/opt/OpenBLAS/lib -I/opt/OpenBLAS/include -lpthread -lm
-// ./a.out n m k P max_comm. Approach
-//  ./a.out 2000 5000 200 4 200 1
-
-
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
