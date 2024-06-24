@@ -9,7 +9,8 @@ This repository contains implementations of the "Gradient Projection for Sparse 
 Sparse recovery is a fundamental problem in signal processing and related fields, where the goal is to accurately reconstruct a sparse signal from a limited set of measurements. The Gradient Projection for Sparse Reconstruction (GPSR_BB) algorithm is a popular method for achieving this task.
 
 The problem is formulated as:
-$$ \underset{x}{\text{minimize}} \lVert x \rVert_0 \newline
+
+$$ \underset{x}{\text{minimize}} \lVert x \rVert_0 \\
 \text{subject to} \quad Ax = b$$
 
 ## Getting Started
