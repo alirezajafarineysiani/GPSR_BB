@@ -1,4 +1,4 @@
-# Gradient Projection for Sparse Reconstruction (GPSR_BB)
+# C and Python implementation of Gradient Projection for Sparse Reconstruction (GPSR_BB)
 
 ## Overview
 
