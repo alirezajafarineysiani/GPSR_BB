@@ -75,9 +75,9 @@ You can run the executable with the following command:
 ```bash
 ./main n m k
 ```
-- $n$: Number of measurements.
-- $m$: Dimension of the signal.
-- $k$: Number of non-zero entries in the original signal $\mathbf{x}$.
+- n: Number of measurements.
+- m: Dimension of the signal.
+- k: Number of non-zero entries in the original signal $\mathbf{x}$.
 
 For example:
 ```bash
