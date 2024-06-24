@@ -65,9 +65,25 @@ To build and run the C implementation, you will need the OpenBLAS library versio
 ### Building the C Implementation
 
 To build the C implementation (example assuming gcc and OpenBLAS installed):
-```bash
-gcc main.c -lopenblas -L/opt/OpenBLAS/lib -I/opt/OpenBLAS/include 
-```
+
+gcc main.c -lopenblas -L/opt/OpenBLAS/lib -I/opt/OpenBLAS/include -o main
+
+### Running the Executable
+
+You can run the executable with the following command:
+
+./main n m k
+
+- n: Number of measurements.
+- m: Dimension of the signal.
+- k: Number of non-zero entries in the original signal x.
+
+For example:
+
+./main 400 1000 10
+
+This command runs the program with n = 400, m = 1000, and k = 10, indicating 400 measurements, a signal dimension of 1000, and 10 non-zero entries in the original signal x.
+
 
 ### Using the Python Implementation
 
