@@ -12,6 +12,11 @@ The problem is formulated as:
 
 $$ minimize \quad ||\mathbf{x}||_0 \quad subject \quad to \quad \mathbf{A}\mathbf{x} = \mathbf{b} $$
 
+Due to NP-hard of the above problem, some approaches had been proposed based on relaxtion of $$\ell_0$$-norm by $$\ell_1$$-norm.
+GPSR solves lasso problem, which is defined the following:
+
+$$ minimize \quad \tau||\mathbf{x}||_1 + ||\mathbf{A}\mathbf{x} - \mathbf{b}||_2^2 $$
+
 ## Getting Started
 
 To use these implementations, follow the steps below:
