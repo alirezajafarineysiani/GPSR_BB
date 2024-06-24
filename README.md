@@ -60,9 +60,9 @@ To build and run the C implementation, you need the OpenBLAS library. Here's how
 ### Building the C Implementation
 
 To build the C implementation (example assuming gcc and OpenBLAS installed):
-\`\`\`
+```bash
 gcc main.c -lopenblas -L/opt/OpenBLAS/lib -I/opt/OpenBLAS/include -o gpsr_bb
-\`\`\`
+```
 
 Replace \`/opt/OpenBLAS/lib\` and \`/opt/OpenBLAS/include\` with the actual paths where OpenBLAS is installed.
 
