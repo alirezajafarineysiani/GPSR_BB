@@ -1,4 +1,4 @@
-# C and Python implementation of Gradient Projection for Sparse Reconstruction (GPSR) algorithm
+# C and Python Implementation of Gradient Projection for Sparse Reconstruction (GPSR) Algorithm
 
 ## Overview
 
@@ -6,14 +6,14 @@ Welcome to the GPSR_BB repository, where you can find implementations of the "Gr
 
 ## Sparse Recovery Algorithm
 
-Sparse recovery addresses the fundamental problem in signal processing of reconstructing a sparse signal from limited measurements. The GPSR_BB algorithm is renowned for its effectiveness in solving this problem efficiently.
+Sparse recovery addresses the fundamental problem in signal processing of reconstructing a sparse signal from limited measurements. The GPSR_BB algorithm is renowned for its effectiveness in efficiently solving this problem.
 
 The problem is formulated as:
 
 $$ minimize \quad ||\mathbf{x}||_0 \quad subject \quad to \quad \mathbf{A}\mathbf{x} = \mathbf{b} $$
 
-Due to NP-hard of the above problem, some approaches had been proposed based on relaxtion of $$\ell_0$$-norm by $$\ell_1$$-norm.
-GPSR solves lasso problem, which is defined the following:
+Due to the NP-hard nature of the above problem, approaches based on the relaxation of the $\ell_0$-norm by the $\ell_1$-norm have been proposed.
+GPSR solves the lasso problem, which is defined as follows:
 
 $$ minimize \quad \tau||\mathbf{x}||_1 + ||\mathbf{A}\mathbf{x} - \mathbf{b}||_2^2 $$
 
