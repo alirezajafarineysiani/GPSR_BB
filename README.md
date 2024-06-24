@@ -15,7 +15,7 @@ $$
 $$
 
 **The Cauchy-Schwarz Inequality**
-$$\left( \underset{x}{\text{minimize}} \|x\|_0 \\
+$$\left( \underset{x}{\text{minimize}} \lVert x \rVert_0 \\
 \text{subject to} \quad Ax = b \right)$$
 
 ## Getting Started
