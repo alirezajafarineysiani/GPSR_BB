@@ -76,7 +76,7 @@ You can run the executable with the following command:
 ```
 - $n$: Number of measurements.
 - $m$: Dimension of the signal.
-- $k$: Number of non-zero entries in the original signal $\amthbf{x}$.
+- $k$: Number of non-zero entries in the original signal $\mathbf{x}$.
 
 For example:
 ```bash
