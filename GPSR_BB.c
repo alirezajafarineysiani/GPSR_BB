@@ -150,7 +150,7 @@ void GPSR_BB(double* y, double* A, int n, int m, double tau, double* x_init, dou
                 old_u[i] = __temp_u;
                 old_v[i] = __temp_v;
 
-                dd2 += -1*__temp_du*__temp_grad_u + __temp_dv*__temp_grad_v;
+                dd2 += __temp_du*__temp_grad_u + __temp_dv*__temp_grad_v;
             }
 
             
@@ -161,7 +161,7 @@ void GPSR_BB(double* y, double* A, int n, int m, double tau, double* x_init, dou
             if (enforceMonotone == 1) {
                
                 // double lambda0 = - (cblas_ddot(m, gradu, 1, du, 1) + cblas_ddot(m, gradv, 1, dv, 1)) / (DBL_EPSILON + dGd);
-                double lambda0 = dd2 / (DBL_EPSILON + dGd);
+                double lambda0 = -dd2 / (DBL_EPSILON + dGd);
                 if (lambda0 < 0) {
                     printf("ERROR: lambda0 = %f negative. Quit\n", lambda0);
                     free(Aty);
@@ -278,3 +278,4 @@ void GPSR_BB(double* y, double* A, int n, int m, double tau, double* x_init, dou
     free(u);
     free(v);
 }
+
