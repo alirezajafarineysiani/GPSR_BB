@@ -6,16 +6,21 @@ Welcome to the GPSR_BB repository, where you can find implementations of the "Gr
 
 ## Sparse Recovery Algorithm
 
-Sparse recovery addresses the fundamental problem in signal processing of reconstructing a sparse signal from limited measurements. The GPSR_BB algorithm is renowned for its effectiveness in efficiently solving this problem.
+Sparse recovery addresses the fundamental problem in signal processing of reconstructing a sparse signal from limited measurements. The GPSR_BB algorithm is widely recognized for its effectiveness in efficiently solving this problem.
 
-The problem is formulated as:
+The problem can be formulated as:
 
-$$ \underset{\mathbf{x}}{\text{minimize}} \quad \lVert\mathbf{x}\rVert_0 \quad \text{subject to} \quad \mathbf{A}\mathbf{x} = \mathbf{b}$$
+$$ \underset{\mathbf{x}}{\text{minimize}} \quad \lVert\mathbf{x}\rVert_0 \quad \text{subject to} \quad \mathbf{A}\mathbf{x} = \mathbf{b} $$
 
-Due to the NP-hard nature of the above problem, approaches based on the relaxation of the $\ell_0$-norm by the $\ell_1$-norm have been proposed.
-GPSR solves the lasso problem, which is defined as follows:
+where $\mathbf{x} \in \mathbb{R}^n$ is the sparse signal to be recovered, $\mathbf{A} \in \mathbb{R}^{m \times n}$ (with $m < n$) is the sensing matrix assumed to be full rank, and $\mathbf{b} \in \mathbb{R}^m$ is the measurement vector.
 
-$$ \underset{\mathbf{x}}{\text{minimize}} \quad \tau \lVert\mathbf{x}\rVert_1 + \lVert\mathbf{A}\mathbf{x} - \mathbf{b}\rVert_2^2$$
+Due to the NP-hard nature of the problem stated above, approaches based on the relaxation of the $\ell_0$-norm by the $\ell_1$-norm have been proposed. GPSR_BB addresses this through the solution of the lasso problem, defined as:
+
+$$ \underset{\mathbf{x}}{\text{minimize}} \quad \tau \lVert\mathbf{x}\rVert_1 + \lVert\mathbf{A}\mathbf{x} - \mathbf{b}\rVert_2^2 $$
+
+This formulation seeks a sparse solution $\mathbf{x}$ by balancing the sparsity-inducing $\ell_1$-norm regularization with the fidelity term $\lVert\mathbf{A}\mathbf{x} - \mathbf{b}\rVert_2^2$, where $\tau$ is a regularization parameter.
+
+This approach leverages optimization techniques to efficiently recover sparse signals from noisy or incomplete measurements, making it a valuable tool in various signal processing applications.
 
 ## Getting Started
 
