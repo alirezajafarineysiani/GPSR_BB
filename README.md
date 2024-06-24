@@ -11,11 +11,10 @@ Sparse recovery addresses the fundamental problem in signal processing of recons
 The problem is formulated as:
 
 $$ minimize \quad ||\mathbf{x}||_0 \quad subject \quad to \quad \mathbf{A}\mathbf{x} = \mathbf{b} $$
+$$ \underset{\mathbf{x}}{\text{minimize}} \quad \lVert\mathbf{x}\rVert_0 \text{subject to} \quad \mathbf{A}\mathbf{x} = \mathbf{b}$$
 
 Due to the NP-hard nature of the above problem, approaches based on the relaxation of the $\ell_0$-norm by the $\ell_1$-norm have been proposed.
 GPSR solves the lasso problem, which is defined as follows:
-
-$$ minimize \quad \tau||\mathbf{x}||_1 + ||\mathbf{A}\mathbf{x} - \mathbf{b}||_2^2 $$
 
 $$ \underset{\mathbf{x}}{\text{minimize}} \quad \tau \lVert\mathbf{x}\rVert_1 + \lVert\mathbf{A}\mathbf{x} - \mathbf{b}\rVert_2^2$$
 
