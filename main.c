@@ -10,15 +10,6 @@
 
 #include "timer_linux.h"
 
-pthread_barrier_t barrier;
-
-#define NMAX 10000
-#define FLAGTEST 0
-#define SNR      30
-
-
-
-
 void zero(double* x, int n){
     for (int i = 0; i < n; i++){
         x[i] = 0.00f;
