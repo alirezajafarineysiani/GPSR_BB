@@ -1,5 +1,5 @@
 // GPSR_BB function definition
-void GPSR_BB(double* y, double* A, int n, int m, double tau, double* x_init, double* x_out) {
+void GPSR_BB(double* b, double* A, int n, int m, double tau, double* x_init, double* x_out) {
     // Parameters
     int stopCriterion = 3;
     double tolA = 0.01;
@@ -14,16 +14,16 @@ void GPSR_BB(double* y, double* A, int n, int m, double tau, double* x_init, dou
 
     // Initialization
     
-    double* Aty = (double*)malloc(m * sizeof(double));
+    double* Atb = (double*)malloc(m * sizeof(double));
     double* x = (double*)malloc(m * sizeof(double));
     memcpy(x, x_init, m * sizeof(double));
 
 
 
-    // Precompute A'*y
-    cblas_dgemv(CblasRowMajor, CblasTrans, n, m, 1.0, A, m, y, 1, 0.0, Aty, 1);
+    // Precompute A'*b
+    cblas_dgemv(CblasRowMajor, CblasTrans, n, m, 1.0, A, m, b, 1, 0.0, Atb, 1);
 
-    double* aux = Aty;
+    double* aux = Atb;
     double max_tau = 0;
     for ( int i = 0; i < m; i++){
         double __aux = fabs(aux[i]);
@@ -33,7 +33,7 @@ void GPSR_BB(double* y, double* A, int n, int m, double tau, double* x_init, dou
     if (tau >= max_tau) {
         memset(x_out, 0, m * sizeof(double));
        
-        free(Aty);
+        free(Atb);
         free(x);
         return;
     }
@@ -89,7 +89,7 @@ void GPSR_BB(double* y, double* A, int n, int m, double tau, double* x_init, dou
     // Loop for continuation
     while (keep_continuation) {
         
-        cblas_dcopy(n, y, 1, resid, 1);
+        cblas_dcopy(n, b, 1, resid, 1);
         cblas_dgemv(CblasRowMajor, CblasNoTrans, n, m, -1.0, A, m, x, 1, 1.0, resid, 1);
 
         tau = final_tau * cont_factors;
@@ -107,7 +107,7 @@ void GPSR_BB(double* y, double* A, int n, int m, double tau, double* x_init, dou
 
         for (int i = 0; i < n; i++)
         {
-            resid_base[i] = y[i] - resid[i];
+            resid_base[i] = b[i] - resid[i];
         }
         
         // cblas_dcopy(n, resid, 1, resid_base, 1);
@@ -128,7 +128,7 @@ void GPSR_BB(double* y, double* A, int n, int m, double tau, double* x_init, dou
                 double __temp_u = u[i];
                 double __temp_v = v[i];
 
-                __temp_term = temp[i] - Aty[i];
+                __temp_term = temp[i] - Atb[i];
             
                 __temp_grad_u = __temp_term + tau;
                 __temp_grad_v = -1*__temp_term + tau;
@@ -164,7 +164,7 @@ void GPSR_BB(double* y, double* A, int n, int m, double tau, double* x_init, dou
                 double lambda0 = -dd2 / (DBL_EPSILON + dGd);
                 if (lambda0 < 0) {
                     printf("ERROR: lambda0 = %f negative. Quit\n", lambda0);
-                    free(Aty);
+                    free(Atb);
                     free(x);
                     free(u);
                     free(v);
@@ -212,7 +212,7 @@ void GPSR_BB(double* y, double* A, int n, int m, double tau, double* x_init, dou
             }
 
             for (int i = 0; i < n; i++) {
-                resid[i] = y[i]-resid_base[i] - lambda_val*auv[i];
+                resid[i] = b[i]-resid_base[i] - lambda_val*auv[i];
             }
 
 
@@ -273,7 +273,7 @@ void GPSR_BB(double* y, double* A, int n, int m, double tau, double* x_init, dou
     memcpy(x_out, x, m * sizeof(double));
 
  
-    free(Aty);
+    free(Atb);
     free(x);
     free(u);
     free(v);
