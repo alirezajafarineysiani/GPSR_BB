@@ -17,7 +17,7 @@ GPSR solves the lasso problem, which is defined as follows:
 
 $$ minimize \quad \tau||\mathbf{x}||_1 + ||\mathbf{A}\mathbf{x} - \mathbf{b}||_2^2 $$
 
-$$\minimize_{\mathbf{x}} \quad \tau \|\mathbf{x}\|_1 + \|\mathbf{A}\mathbf{x} - \mathbf{b}\|_2^2$$
+$$ \underset{\mathbf{x}}{\text{minimize}} \quad \tau \lVert\mathbf{x}\rVert_1 + \lVert\mathbf{A}\mathbf{x} - \mathbf{b}\rVert_2^2$$
 
 ## Getting Started
 
