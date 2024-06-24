@@ -10,7 +10,7 @@ Sparse recovery is a fundamental problem in signal processing and related fields
 
 The problem is formulated as:
 
-$$ \underset{x}{\text{minimize}} \lVert x \rVert_0 \\
+$$ \underset{x}{\text{minimize}} \quad \lVert x \rVert_0 \\
 \text{subject to} \quad Ax = b$$
 
 ## Getting Started
