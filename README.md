@@ -2,7 +2,7 @@
 
 ## Overview
 
-Welcome to the GPSR_BB repository, where you can find implementations of the "Gradient Projection for Sparse Reconstruction" (GPSR_BB) algorithm in Python and C. Originally developed in MATLAB by Mário Figueiredo, Robert D. Nowak, and Stephen J. Wright, this project aims to provide accessible versions of the algorithm in both programming languages.
+Welcome to the GPSR_BB repository, where you can find implementations of the "Gradient Projection for Sparse Reconstruction" (GPSR_BB) algorithm in C and Python. Originally developed in MATLAB by Mário Figueiredo, Robert D. Nowak, and Stephen J. Wright, this project aims to provide accessible versions of the algorithm in both programming languages.
 
 ## Sparse Recovery Algorithm
 
@@ -77,7 +77,3 @@ The Python implementation is provided as \`gpsr_bb.py\`. You can use it directly
 
 - [Alireza Jafari-Neysiani](https://github.com/alirezajafarineysiani)
 
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-EOF
