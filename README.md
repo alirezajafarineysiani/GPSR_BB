@@ -73,7 +73,7 @@ gcc main.c -lopenblas -L/opt/OpenBLAS/lib -I/opt/OpenBLAS/include -o main
 
 You can run the executable with the following command:
 ```bash
-./main n m k
+./main $n$ m k
 ```
 - $n$: Number of measurements.
 - $m$: Dimension of the signal.
